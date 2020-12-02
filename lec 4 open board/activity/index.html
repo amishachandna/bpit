@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>document</title>
+  <meta name="description" content="My Page Description">
+  
+<style>
+    * {
+        margin:0px;
+    }
+</style>
+</head>
+<body>
+    <!--<h1>Starting With Whiteboard</h1>-->
+    <!--canvas-->
+    <!--drawing board-->
+    <!--width=>300px,height=150px-->     
+    <canvas class="board"></canvas>
+    <!--object-->   
+                                                                                                    
+  <script>
+      let canvas=document.querySelector(".board");
+      canvas.height=window.innerHeight;
+      canvas.width=window.innerWidth;
+      let tool=canvas.getContext("2d");
+     // tool.fillRect(0,0,100,100);
+     // tool.fillStyle="green";
+     // tool.fillRect(100,100,100,100);
+     // tool.strokeStyle="orange";
+      //tool.lineWidth=10;
+      //tool.strokeRect(100,100,100,100);
+      tool.beginPath();
+      tool.moveTo(20,20);
+      tool.lineTo(100,100);
+      tool.lineTo(200,100);
+      tool.stroke();
+      
+  </script>
+</body>
+</html>

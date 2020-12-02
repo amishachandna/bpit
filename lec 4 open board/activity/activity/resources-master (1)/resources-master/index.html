@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        .tool-img {
+            height: 2rem;
+        }
+
+        .tools {
+            display: flex;
+        }
+        .tool-options {
+            height: 7rem;
+            width: 8rem;
+            background: yellow;
+        }
+
+        .tool-range {
+            height: 40%;
+            background: green;
+            /* trick */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .colors {
+            height: 60%;
+            background: brown;
+            display: flex;
+            /* horzionatlly  */
+            justify-content: space-evenly;
+           /* vertical alignment */
+            align-items: center;
+        }
+
+        .color {
+            height: 60%;
+            background: gray;
+            width: 25%;
+            border-radius: 50%;
+        }
+        .slider {
+            width: 80%
+        }
+
+        #red {
+            background: red;
+        }
+
+        #green {
+            background: green;
+        }
+
+        #blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toolbar">
+        <div class="tools">
+            <div class="tool">
+                <img src="NewIcons/Black_Pencil.svg" alt="" class="tool-img" id="pencil">
+
+                <div class="tool-options">
+                    <div class="tool-range">
+                        <input type="range" class="slider"></div>
+                    <div class="colors">
+                        <div class="color" id="red"></div>
+                        <div class="color" id="green"></div>
+                        <div class="color" id="blue"></div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="tool">
+                <img src="NewIcons/Eraser.svg" alt="" class="tool-img" id="eraser"></div>
+        </div>
+    </div>
+    <canvas class="board"></canvas>
+    <!-- object  -->
+    <script>
+        //    alert("Js Ran");
+        //    window=> represents current tab 
+        // document => represents current tab html
+        let canvas = document.querySelector(".board");
+        // increase the size of canvas
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+        //    get browser tool => draw
+        // 2d ,3d,webgl 
+        let tool = canvas.getContext("2d");
+        tool.lineWidth = 10;
+        // find all the matches elements
+        let Alltools = document
+            .querySelectorAll(".tool-img");
+        for (let i = 0; i < Alltools.length; i++) {
+            Alltools[i].addEventListener("click", function (e) {
+                //    e.currentTarget
+                let toolName = e.currentTarget.id;
+                if (toolName == "pencil") {
+                    tool.strokeStyle = "blue";
+                } else if (toolName == "eraser") {
+                    tool.strokeStyle = "white";
+                }
+            })
+        }
+        let initialMouseX = null;
+        let initialMouseY = null;
+        let isMouseDown = false;
+        tool.strokeStyle = "blue";
+        // isMouse Down=>
+        // path draw start 
+        let toolBar = document.querySelector(".toolbar");
+        window.addEventListener("mousedown", function onmouseDown(obj) {
+            initialMouseX = obj.clientX;
+            initialMouseY = obj.clientY - toolBar.offsetHeight;
+            isMouseDown = true;
+            // console.log("mouse down fired");
+            tool.beginPath();
+            tool.moveTo(initialMouseX, initialMouseY);
+        });
+        // actual draw
+        window.addEventListener("mousemove", function (e) {
+            let finalMouseX = e.clientX;
+            let finalMouseY = e.clientY - toolBar.offsetHeight;
+            if (isMouseDown == true) {
+                // user has pressed the key and then he is moving
+                tool.lineTo(finalMouseX, finalMouseY);
+                tool.stroke();
+            }
+        })
+        window.addEventListener("mouseup", function (obj) {
+            isMouseDown = false;
+        })
+    </script>
+</body>
+
+</html>
